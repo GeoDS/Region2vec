@@ -141,12 +141,4 @@ print("Optimization Finished!")
 print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
 
-result_csv = 'result.csv'
-if not os.path.exists(os.path.join(result_path, result_csv)):
-    with open(os.path.join(result_path, result_csv), 'w') as f:
-        csv_write = csv.writer(f)
-        csv_head = ['epoch', 'losstype', 'hops', 'inertia', 'total_ratio', 'sil_score', 'global_ineq', 'output', 'hidden', 'lr', 'dropout', 'patience', 'median_ineq','n_clu']
-        csv_write.writerow(csv_head)
-        f.close()
-
 
