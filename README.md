@@ -4,3 +4,4 @@
 2. run clustering.py to generate the clustering result. OR run bash run_clustering.py to run clustering.py for all results.
 
 Notes: the final results may vary depends on different platform and package versions.
+The current result is obtained using Ubuntu with all pacakge versions in requirements.txt. 
