@@ -23,19 +23,19 @@ parser.add_argument('--epochs', type=int, default=500,
                     help='Number of epochs to train.')
 parser.add_argument('--patience', type=int, default=50,
                     help='Early stopping control.')
-parser.add_argument('--ltype', type=str, default='div',
-                    help='divide or loglike.')
+parser.add_argument('--ltype', type=str, default='divreg',
+                    help='divide or loglike with regularization.')
 parser.add_argument('--lr', type=float, default=0.001,     
                     help='Initial learning rate.')
 parser.add_argument('--weight_decay', type=float, default=5e-4,
                     help='Weight decay (L2 loss on parameters).')
 parser.add_argument('--hidden', type=int, default=16,
                     help='Number of hidden units.')
-parser.add_argument('--output', type=int, default=8,
+parser.add_argument('--output', type=int, default=14,
                     help='Output dim.')
 parser.add_argument('--dropout', type=float, default=0.1,
                     help='Dropout rate (1 - keep probability).')
-parser.add_argument('--hops', type=float, default=1,
+parser.add_argument('--hops', type=float, default=5,
                     help='Contrain with hops')
 
 
@@ -50,6 +50,7 @@ if args.cuda:
 
 # Load data
 adj, features, labels, neg_mask, pos_mask, hops_m, intensity_m_norm, strength = load_widata()
+print(args.ltype)
 
 # Model and optimizer
 model = GCN(nfeat=features.shape[1],
@@ -71,6 +72,8 @@ if args.cuda:
     pos_mask = pos_mask.cuda()
     hops_m = hops_m.cuda()
 
+N_pos = sum(sum(pos_mask))
+N_neg = sum(sum(neg_mask))
 
 # Train model
 t_total = time.time()
@@ -81,29 +84,23 @@ for epoch in range(args.epochs):
     optimizer.zero_grad()
     output, output_sfx = model(features, adj) 
 
+    pdist = torch.norm(output[:, None]-output, dim=2, p=2)
+    inner_pro = torch.mm(output,output.T)
+    loss_hops = 0
+
 # the div loss uses the flow strength directly. It tries to minimize the loss of W_pos*Dist - W_zero*Dist. A larger strength (W_pos) leads to smaller\
 #  the distances between embeddings; the W_zero refers nodes with no flow, so their embeddings differences should be as large as possible. 
     if args.ltype == 'div':
-        pdist = torch.norm(output[:, None]-output, dim=2, p=2)
         if args.hops > 1:
-            loss_train = torch.sum(pdist.mul(labels).mul(pos_mask)) /( (torch.sum(pdist.mul(neg_mask)) + EPS) + (torch.sum(pdist.mul(hops_m)) + EPS))
-            loss_train = loss_train
-        else:
-            loss_train = torch.sum(pdist.mul(labels).mul(pos_mask)) / (torch.sum(pdist.mul(neg_mask)) + EPS)
-            loss_train = loss_train
+            loss_hops = torch.sum(pdist.mul(hops_m)) + EPS
+        loss_train = torch.sum(pdist.mul(labels).mul(pos_mask)) /( (torch.sum(pdist.mul(neg_mask)) + EPS) + loss_hops)
 
-# log loss: similar to Node2vec loss
-    elif args.ltype == 'log':
-        inner_pro = torch.mm(output,output.T)
-        pos_out = inner_pro.mul(1/labels).mul(pos_mask)
-        neg_out = inner_pro.mul(neg_mask)
-        pos_loss = -torch.log(torch.sigmoid(pos_out) + EPS).mean()
-        neg_loss = -torch.log(1 - torch.sigmoid(neg_out) + EPS).mean()
+    elif args.ltype == 'divreg':
         if args.hops > 1:
-            neg_loss2 = -torch.log(1 - torch.sigmoid(inner_pro.mul(hops_m)) + EPS).mean()
-            loss_train = pos_loss + neg_loss + neg_loss2
-        else:
-            loss_train = pos_loss + neg_loss
+            loss_hops = torch.sum(pdist.mul(hops_m)) + EPS
+        loss_train = torch.sum(pdist.mul(labels).mul(pos_mask))*N_neg /(N_pos*( (torch.sum(pdist.mul(neg_mask)) + EPS) + loss_hops))
+
+
 
     loss_train.backward()
     optimizer.step()
@@ -120,7 +117,7 @@ for epoch in range(args.epochs):
         os.mkdir(result_path)
 
     if epoch >= 200:
-        save_name = 'lr_{}_dropout_{}_hidden_{}_output_{}_patience_{}_hos_{}_losstype_{}.csv'.format(args.lr, args.dropout, args.hidden, args.output, args.patience, args.hops, args.ltype)
+        save_name = 'lr_{}_dropout_{}_hidden_{}_output_{}_patience_{}_hos_{}_losstype_{}_seed_{}.csv'.format(args.lr, args.dropout, args.hidden, args.output, args.patience, args.hops, args.ltype, args.seed)
        
         np.savetxt(result_path + 'Epoch_{}_'.format(epoch) + save_name, output.detach().numpy())
 
@@ -140,5 +137,13 @@ for epoch in range(args.epochs):
 print("Optimization Finished!")
 print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
+
+result_csv = 'result.csv'
+if not os.path.exists(os.path.join(result_path, result_csv)):
+    with open(os.path.join(result_path, result_csv), 'w') as f:
+        csv_write = csv.writer(f)
+        csv_head = ['epoch', 'losstype', 'hops', 'inertia', 'total_ratio', 'global_ineq', 'output', 'hidden', 'lr', 'dropout', 'patience', 'median_ineq','n_clu']
+        csv_write.writerow(csv_head)
+        f.close()
 
 
