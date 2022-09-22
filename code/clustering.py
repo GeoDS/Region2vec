@@ -9,7 +9,7 @@ parser.add_argument('--n_clusters', type=int, default=14,
                     help='Number of clusters.')
 parser.add_argument('--affinity', type=str, default='euclidean',
                     help='affinity metric')
-parser.add_argument('--filename', type=str, default='Epoch_378_lr_0.001_dropout_0.1_hidden_16_output_14_patience_50_hos_5.0_losstype_div.csv',
+parser.add_argument('--filename', type=str, default='Epoch_378_dropout_0.1_hop_5.0_losstype_divreg_mod_False.csv',
                     help='file name')
                   
 args = parser.parse_args()
@@ -23,7 +23,6 @@ path = '../result/'
 
 labels, total_ratio, median_ineq, median_cossim, median_dist, homo_score = run_aggclustering(path, args.filename, args.affinity, args.n_clusters, linkage)
 csv_data = [args.filename, args.n_clusters, linkage, args.affinity, total_ratio, median_ineq, median_cossim, median_dist, homo_score]
-
 result_csv = 'cluster_result.csv'
 
 if not os.path.exists(os.path.join(path, result_csv)):
@@ -33,7 +32,6 @@ if not os.path.exists(os.path.join(path, result_csv)):
         csv_write.writerow(csv_head)
         f.close()
 
-with open(os.path.join(path, result_csv), 'w') as f:
-    csv_write = csv.writer(f)
+with open(os.path.join(path, result_csv), mode='a', newline='') as f1:
+    csv_write = csv.writer(f1)
     csv_write.writerow(csv_data)
-    f.close()
