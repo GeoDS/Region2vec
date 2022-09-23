@@ -7,7 +7,7 @@ Region2vec: Community Detection on Spatial Networks Using Graph Embedding with N
 
 If you find our code useful for your research, please cite our paper:
 
-*Liang, ....*
+*Liang, Y., Zhu, J., Ye, W., and Gao, S.\. (2022). [Region2vec: Community Detection on Spatial Networks Using Graph Embedding with Node Attributes and Spatial Interactions] ...* 
 
 ## Requirements
 
@@ -36,8 +36,9 @@ python train.py
 ```
 python clustering.py --filename your_filename
 ```
+Here the 'your_filename' should be replaced with the generated file from step 1.
 
-OR use bash, run bash run_clustering.py to run clustering.py for all results.
+3. Alternatively, to generate the clustering for all the files, please use bash, and run bash run_clustering.py.
 
 ```
 bash run_clustering.sh 
