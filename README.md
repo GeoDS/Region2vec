@@ -69,5 +69,5 @@ The current result is obtained using Ubuntu with all pacakge versions in require
 Will update more details on the data preprocessing and preparation (e.g., spatial flow interaction matrix/spatial weights, geographic adjacency matrix). 
 
 ## Acknowledgement
-We acknowledge the funding support from the County Health Rankings and Roadmaps program of the University of Wisconsin Population Health Institute, Wisconsin Department of Health Services, and the National Science Foundation funded AI institute [Grant No. 2112606] for Intelligent Cyberinfrastructure with Computational Learning in the Environment (ICICLE). Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the funders.
+We acknowledge the funding support from the County Health Rankings and Roadmaps program of the University of Wisconsin Population Health Institute, Wisconsin Department of Health Services, and the National Science Foundation funded AI institute [Grant No. 2112606] for [Intelligent Cyberinfrastructure with Computational Learning in the Environment (ICICLE)](https://icicle.ai/). Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the funders.
 
