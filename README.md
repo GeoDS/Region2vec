@@ -17,15 +17,14 @@ If you find our code useful for your research, you may cite our paper:
 
 
 ```
-@article{rao2021privacy,
-  title={A privacy-preserving framework for location recommendation using decentralized collaborative machine learning},
-  author={Rao, Jinmeng and Gao, Song and Li, Mingxiao and Huang, Qunying},
-  journal={Transactions in GIS},
-  volume={25},
-  number={3},
-  pages={1153--1175},
-  year={2021},
-  publisher={Wiley Online Library}
+@inproceedings{liang2022regions2vec,
+  title={Region2vec: Community Detection on Spatial Networks Using Graph Embedding with Node Attributes and Spatial Interactions},
+  author={Liang, Yunlei and Zhu, Jiawei and Ye, Wen and Gao, Song },
+  booktitle={Proceedings of 30th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems
+(ACM SIGSPATIAL 2022), November 1-4, 2022, Seattle, WA, USA},
+  year={2022},
+  pages={1--4},
+  doi={10.1145/3557915.3560974}
 }
 ```
 
@@ -63,5 +62,8 @@ Here the 'your_filename' should be replaced with the generated file from step 1.
 ```
 bash run_clustering.sh 
 ```
-Notes: the final results may vary depends on different platform and package versions.
+Notes: the final results (e.g., metric values) may vary depends on different platforms and package versions.
 The current result is obtained using Ubuntu with all pacakge versions in requirements.txt. 
+
+## Data
+Will update more details on the data preprocessing and preparation (e.g., spatial flow interaction matrix/spatial weights, geographic adjacency matrix). 
