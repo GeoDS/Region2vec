@@ -12,7 +12,7 @@ Community Detection algorithms are used to detect densely connected components i
 
 If you find our code useful for your research, you may cite our paper:
 
-*Liang, Y., Zhu, J., Ye, W., and Gao, S.\. (2022). [Region2vec: Community Detection on Spatial Networks Using Graph Embedding with Node Attributes and Spatial Interactions] (https://arxiv.org/abs/2210.08041). In Proceedings of 30th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems
+*Liang, Y., Zhu, J., Ye, W., and Gao, S.\. (2022).  [Region2vec: Community Detection on Spatial Networks Using Graph Embedding with Node Attributes and Spatial Interactions] (https://arxiv.org/abs/2210.08041). In Proceedings of 30th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems
 (ACM SIGSPATIAL 2022), November 1-4, 2022, Seattle, WA, USA. DOI: https://doi.org/10.1145/3557915.3560974* 
 
 
