@@ -66,6 +66,7 @@ Notes: the final results (e.g., metric values) may vary depends on different pla
 The current result is obtained using Ubuntu with all pacakge versions in requirements.txt. 
 
 ## Data
+The data files used in our method are listed below with detailed descriptions.
 
 Flow_matrix.csv: The visitor flow matrix between Census Tracts in Wisconsin (The spatial flow interaction matrix).
 
