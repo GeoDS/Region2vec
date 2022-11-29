@@ -66,7 +66,22 @@ Notes: the final results (e.g., metric values) may vary depends on different pla
 The current result is obtained using Ubuntu with all pacakge versions in requirements.txt. 
 
 ## Data
-Will update more details on the data preprocessing and preparation (e.g., spatial flow interaction matrix/spatial weights, geographic adjacency matrix). 
+
+Flow_matrix.csv: The visitor flow matrix between Census Tracts in Wisconsin (The spatial flow interaction matrix).
+
+Spatial_matrix.csv: The adjacency matrix generated based on the geographic adjacency relationship.
+
+Spatial_matrix_rook.csv: The adjacency matrix generated based on the geographic adjacency relationship with the rook-type contiguity relationship.
+
+Spatial_distance_matrix.csv: the hop distance calculated based on the spatial adjacency matrix.
+
+flow_reID.csv: the visitor flows with updated IDs of Census Tracts.
+
+feature_matrix_f1.csv: the features of nodes (Census Tracts).
+
+feature_matrix_lwinc.csv: the low income population feature of nodes used for generating the homogeneous scores.
+
+
 
 ## Acknowledgement
 We acknowledge the funding support from the County Health Rankings and Roadmaps program of the University of Wisconsin Population Health Institute, Wisconsin Department of Health Services, and the National Science Foundation funded AI institute [Grant No. 2112606] for [Intelligent Cyberinfrastructure with Computational Learning in the Environment (ICICLE)](https://icicle.ai/). Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the funders.
