@@ -40,7 +40,7 @@ scikit_learn==1.1.2
 
 scipy==1.3.1
 
-torch==1.4.0
+torch==1.4.0 (suggest torch>=2.2.0 for security alert)
 
 
 
