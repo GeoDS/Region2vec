@@ -32,7 +32,7 @@ If you find our code useful for your research, you may cite our paper:
 
 ## Requirements
 
-Region2 uses the following packages with Python 3.7
+Region2vec uses the following packages with Python 3.7
 
 numpy==1.19.5
 
